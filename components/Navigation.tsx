@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { Bell } from "lucide-react";
 
 const navLinks = [
   { href: "/", label: "الرئيسية" },
@@ -19,13 +20,13 @@ export default function Navigation() {
   return (
     <header className="bg-gradient-to-r from-blue-700 to-blue-500 text-white shadow-md">
       <nav className="container mx-auto flex items-center justify-between px-6 py-4">
-        {/* Logo */}
+        {/* شعار أو عنوان المنصة */}
         <div className="text-2xl font-bold tracking-wide">
           منصة التعليم
         </div>
 
-        {/* Desktop Menu */}
-        <ul className="hidden md:flex gap-8 text-lg font-medium">
+        {/* Desktop Menu - في الوسط */}
+        <ul className="hidden md:flex gap-8 text-lg font-medium flex-1 justify-center">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
@@ -41,6 +42,14 @@ export default function Navigation() {
             </li>
           ))}
         </ul>
+
+        {/* أيقونات: الدائرة الحمراء + الإشعارات */}
+        <div className="hidden md:flex items-center gap-4">
+          <div className="w-7 h-7 rounded-full bg-red-600 border-2 border-white shadow-md"></div>
+          <button className="text-white hover:text-yellow-300 transition-colors">
+            <Bell size={22} />
+          </button>
+        </div>
 
         {/* Mobile Menu Button */}
         <button
@@ -72,6 +81,13 @@ export default function Navigation() {
                 </Link>
               </li>
             ))}
+            {/* أيقونات في الموبايل */}
+            <li className="flex items-center gap-4 mt-4">
+              <div className="w-7 h-7 rounded-full bg-red-600 border-2 border-white shadow-md"></div>
+              <button className="text-white hover:text-yellow-300 transition-colors">
+                <Bell size={22} />
+              </button>
+            </li>
           </ul>
         </div>
       )}
