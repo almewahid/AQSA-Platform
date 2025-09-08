@@ -1,0 +1,60 @@
+<!-- شاشة الرسائل -->
+<section id="messages-screen" class="screen">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 h-[80vh]">
+    
+    <!-- قائمة المحادثات -->
+    <div class="bg-white rounded-xl shadow-lg p-4 overflow-y-auto">
+      <h2 class="text-xl font-bold mb-4">المحادثات</h2>
+      <div class="space-y-3">
+        <!-- محادثة -->
+        <div class="flex items-center p-3 rounded-lg hover:bg-gray-100 cursor-pointer bg-gray-50" data-chat="mohamed">
+          <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+            <i class="fas fa-user text-gray-500"></i>
+          </div>
+          <div class="mr-3">
+            <h3 class="font-bold">أ. محمد أحمد</h3>
+            <p class="text-sm text-gray-500 truncate">السلام عليكم...</p>
+          </div>
+        </div>
+
+        <div class="flex items-center p-3 rounded-lg hover:bg-gray-100 cursor-pointer" data-chat="sara">
+          <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+            <i class="fas fa-user text-gray-500"></i>
+          </div>
+          <div class="mr-3">
+            <h3 class="font-bold">أ. سارة خالد</h3>
+            <p class="text-sm text-gray-500 truncate">تم تأكيد الدرس...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- نافذة المحادثة -->
+    <div class="bg-white rounded-xl shadow-lg md:col-span-2 flex flex-col">
+      <!-- الهيدر -->
+      <div class="flex items-center justify-between border-b p-4">
+        <div class="flex items-center">
+          <div class="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center mr-3">
+            <i class="fas fa-user text-gray-500"></i>
+          </div>
+          <div>
+            <h3 id="chat-header" class="font-bold">اختر محادثة</h3>
+            <p id="chat-status" class="text-sm text-gray-500">---</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- الرسائل -->
+      <div id="chat-messages" class="flex-1 p-4 overflow-y-auto bg-gray-50">
+        <!-- يتم ملؤها من JS -->
+      </div>
+
+      <!-- كتابة رسالة -->
+      <div class="p-4 border-t flex">
+        <input id="chat-input" type="text" placeholder="اكتب رسالتك هنا..." 
+               class="flex-grow border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary">
+        <button id="chat-send" class="ml-2 btn-primary text-white px-4 py-2 rounded-lg">إرسال</button>
+      </div>
+    </div>
+  </div>
+</section>
