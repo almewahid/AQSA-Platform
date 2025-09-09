@@ -1,156 +1,232 @@
-"use client"
-import { useState } from "react"
+"use client";
+
+import { useState } from "react";
+import { Calendar, CheckCircle, BookOpen, XCircle, User } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function MyLessons() {
-  // بيانات تجريبية (دروس قادمة + سابقة)
+  // بيانات وهمية للتجربة
+  const [stats] = useState({
+    total: 8,
+    completed: 3,
+    upcoming: 3,
+    remaining: 2,
+  });
+
   const upcomingLessons = [
     {
       id: 1,
-      teacher: " محمد أحمد",
+      teacher: "محمد أحمد",
       subject: "رياضيات - ثانوي",
+      date: "الأحد 8 أكتوبر 2023",
+      time: "6:00 مساء - 7:00 مساء (60 دقيقة)",
       status: "مؤكد",
-      date: "الأحد، 8 أكتوبر 2023",
-      time: "6:00 مساءً - 7:00 مساءً (60 دقيقة)",
     },
     {
       id: 2,
       teacher: "سارة خالد",
       subject: "لغة إنجليزية - متوسط",
+      date: "الثلاثاء 10 أكتوبر 2023",
+      time: "5:00 مساء - 6:00 مساء (60 دقيقة)",
       status: "معلق",
-      date: "الثلاثاء، 10 أكتوبر 2023",
-      time: "5:00 مساءً - 6:00 مساءً (60 دقيقة)",
     },
-  ]
+  ];
 
-  const pastLessons = [
+  const completedLessons = [
     {
       id: 3,
-      teacher: "أحمد يوسف",
+      teacher: "أحمد علي",
       subject: "فيزياء - ثانوي",
-      status: "منتهية",
-      date: "الخميس، 1 أكتوبر 2023",
-      time: "4:00 مساءً - 5:00 مساءً (60 دقيقة)",
+      date: "الخميس 1 أكتوبر 2023",
+      time: "7:00 مساء - 8:00 مساء (60 دقيقة)",
     },
+  ];
+
+  const cancelledLessons = [
     {
       id: 4,
-      teacher: "ليلى محمد",
-      subject: "عربي - ثانوي",
-      status: "منتهية",
-      date: "الاثنين، 25 سبتمبر 2023",
-      time: "7:00 مساءً - 8:00 مساءً (60 دقيقة)",
+      teacher: "منى حسن",
+      subject: "كيمياء - ثانوي",
+      date: "السبت 30 سبتمبر 2023",
+      time: "4:00 مساء - 5:00 مساء (60 دقيقة)",
     },
-  ]
-
-  // الحالة (قائمة العرض: قادمة أو سابقة)
-  const [showUpcoming, setShowUpcoming] = useState(true)
-
-  // الدروس المعروضة حسب الزر
-  const lessonsToShow = showUpcoming ? upcomingLessons : pastLessons
+  ];
 
   return (
-    <section>
-      <h1 className="text-2xl font-bold mb-6">دروسي</h1>
-
-      {/* أزرار التنقل */}
-      <div className="flex mb-6">
-        <button
-          onClick={() => setShowUpcoming(true)}
-          className={`px-4 py-2 rounded-r-lg transition-colors ${
-            showUpcoming
-              ? "bg-blue-600 text-white"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-          }`}
-        >
-          القادمة
-        </button>
-        <button
-          onClick={() => setShowUpcoming(false)}
-          className={`px-4 py-2 rounded-l-lg transition-colors ${
-            !showUpcoming
-              ? "bg-blue-600 text-white"
-              : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-          }`}
-        >
-          السابقة
-        </button>
+    <div className="p-6 space-y-6">
+      {/* العنوان والوصف */}
+      <div className="text-center space-y-2">
+        <h1 className="text-3xl font-bold">جلساتي التعليمية</h1>
+        <p className="text-gray-500 text-lg">تتبع جلساتك وإدارة رحلتك التعليمية</p>
       </div>
 
-      {/* قائمة الدروس */}
-      {lessonsToShow.map((lesson) => (
-        <div
-          key={lesson.id}
-          className="bg-white rounded-xl shadow-lg overflow-hidden mb-6"
-        >
-          <div className="p-4 border-b flex items-center justify-between">
-            <div className="flex items-center">
-              <div className="w-12 h-12 rounded-full bg-gray-200 border-2 border-dashed mr-3 flex items-center justify-center">
-                <span className="text-gray-500">👤</span>
-              </div>
-              <div>
-                <h3 className="font-bold">{lesson.teacher}</h3>
-                <p className="text-gray-600 text-sm">{lesson.subject}</p>
-              </div>
-            </div>
-            <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
-              {lesson.status}
-            </span>
+      {/* الكروت الخاصة بالإحصائيات */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <Card className="p-4 flex items-center gap-3 shadow-md">
+          <BookOpen className="h-10 w-10 text-blue-500" />
+          <div>
+            <p className="text-base text-gray-500">إجمالي الجلسات</p>
+            <p className="text-2xl font-bold">{stats.total}</p>
           </div>
+        </Card>
 
-          <div className="p-4 flex flex-col md:flex-row md:items-center md:justify-between">
-            <div className="mb-4 md:mb-0">
-              <div className="flex items-center text-gray-600 mb-2">
-                <span className="mr-2">📅</span>
-                <span>{lesson.date}</span>
-              </div>
-              <div className="flex items-center text-gray-600">
-                <span className="mr-2">🕐</span>
-                <span>{lesson.time}</span>
-              </div>
-            </div>
-
-            {/* الأزرار تختلف حسب إذا كانت قادمة أو سابقة */}
-            {showUpcoming ? (
-              <div className="flex gap-3">
-                <button className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors">
-                  إلغاء الحجز
-                </button>
-                <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
-                  دخول الحصة
-                </button>
-              </div>
-            ) : (
-              <div className="flex gap-3">
-                <button className="px-4 py-2 bg-gray-100 text-gray-500 rounded-lg" disabled>
-                  انتهت
-                </button>
-              </div>
-            )}
+        <Card className="p-4 flex items-center gap-3 shadow-md">
+          <CheckCircle className="h-10 w-10 text-green-500" />
+          <div>
+            <p className="text-base text-gray-500">الجلسات المكتملة</p>
+            <p className="text-2xl font-bold">{stats.completed}</p>
           </div>
-        </div>
-      ))}
+        </Card>
 
-      {/* الباقة */}
-      {showUpcoming && (
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h2 className="font-bold text-lg mb-4">باقة الحصص المتبقية</h2>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center mr-4">
-                <span className="text-blue-600 text-2xl">🎫</span>
-              </div>
-              <div>
-                <h3 className="font-bold">الباقة الأساسية (8 حصص)</h3>
-                <p className="text-gray-600">تنتهي في 15 نوفمبر 2023</p>
-              </div>
-            </div>
-
-            <div className="bg-blue-50 px-4 py-2 rounded-lg text-center">
-              <div className="text-2xl font-bold text-blue-600">5</div>
-              <div className="text-gray-600 text-sm">حصص متبقية</div>
-            </div>
+        <Card className="p-4 flex items-center gap-3 shadow-md">
+          <Calendar className="h-10 w-10 text-orange-500" />
+          <div>
+            <p className="text-base text-gray-500">الجلسات القادمة</p>
+            <p className="text-2xl font-bold">{stats.upcoming}</p>
           </div>
-        </div>
-      )}
-    </section>
-  )
+        </Card>
+
+        <Card className="p-4 flex items-center gap-3 shadow-md">
+          <Calendar className="h-10 w-10 text-purple-500" />
+          <div>
+            <p className="text-base text-gray-500">الجلسات المتبقية</p>
+            <p className="text-2xl font-bold">{stats.remaining}</p>
+          </div>
+        </Card>
+      </div>
+
+      {/* التبويبات */}
+      <Tabs defaultValue="upcoming" className="w-full">
+        <TabsList className="flex justify-center gap-6 bg-gray-100 rounded-xl p-2 w-fit mx-auto">
+          <TabsTrigger value="upcoming" className="flex items-center gap-2">
+            <Calendar className="h-4 w-4" /> القادمة
+          </TabsTrigger>
+          <TabsTrigger value="completed" className="flex items-center gap-2">
+            <CheckCircle className="h-4 w-4" /> المكتملة
+          </TabsTrigger>
+          <TabsTrigger value="cancelled" className="flex items-center gap-2">
+            <XCircle className="h-4 w-4" /> الملغاة
+          </TabsTrigger>
+        </TabsList>
+
+        {/* القادمة */}
+        <TabsContent value="upcoming" className="mt-6 space-y-4">
+          {upcomingLessons.length === 0 ? (
+            <Card className="p-8 text-center shadow-md">
+              <BookOpen className="mx-auto h-12 w-12 text-gray-400" />
+              <p className="mt-2 text-gray-500">لا توجد جلسات قادمة</p>
+              <Link href="/booking">
+                <Button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white">
+                  احجز جلسة جديدة
+                </Button>
+              </Link>
+            </Card>
+          ) : (
+            upcomingLessons.map((lesson) => (
+              <Card key={lesson.id} className="p-4 flex justify-between items-center shadow-md">
+                {/* بيانات المدرس */}
+                <div className="text-right">
+                  <h3 className="font-bold text-lg flex items-center gap-2 justify-end">
+                    {lesson.teacher} <User className="h-5 w-5 text-gray-600" />
+                  </h3>
+                  <p className="text-sm text-gray-500">{lesson.subject}</p>
+                  <p className="text-sm mt-1 flex items-center gap-1 justify-end">
+                    <Calendar className="h-4 w-4 text-red-500" /> {lesson.date}
+                  </p>
+                  <p className="text-sm text-gray-500 flex items-center gap-1 justify-end">
+                    ⏰ {lesson.time}
+                  </p>
+                </div>
+                {/* الأزرار والحالة */}
+                <div className="flex flex-col items-start gap-2">
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm ${
+                      lesson.status === "مؤكد"
+                        ? "bg-green-100 text-green-600"
+                        : "bg-yellow-100 text-yellow-600"
+                    }`}
+                  >
+                    {lesson.status}
+                  </span>
+                  <Button className="bg-blue-600 hover:bg-blue-700 text-white w-28">
+                    دخول الجلسة
+                  </Button>
+                  <Button variant="outline" className="w-28">
+                    إلغاء الحجز
+                  </Button>
+                </div>
+              </Card>
+            ))
+          )}
+        </TabsContent>
+
+        {/* المكتملة */}
+        <TabsContent value="completed" className="mt-6 space-y-4">
+          {completedLessons.length === 0 ? (
+            <Card className="p-8 text-center shadow-md">
+              <CheckCircle className="mx-auto h-12 w-12 text-gray-400" />
+              <p className="mt-2 text-gray-500">لا توجد جلسات مكتملة</p>
+            </Card>
+          ) : (
+            completedLessons.map((lesson) => (
+              <Card key={lesson.id} className="p-4 flex justify-between items-center shadow-md">
+                <div className="text-right">
+                  <h3 className="font-bold text-lg flex items-center gap-2 justify-end">
+                    {lesson.teacher} <User className="h-5 w-5 text-gray-600" />
+                  </h3>
+                  <p className="text-sm text-gray-500">{lesson.subject}</p>
+                  <p className="text-sm mt-1 flex items-center gap-1 justify-end">
+                    <Calendar className="h-4 w-4 text-red-500" /> {lesson.date}
+                  </p>
+                  <p className="text-sm text-gray-500 flex items-center gap-1 justify-end">
+                    ⏰ {lesson.time}
+                  </p>
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <span className="px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-600">
+                    مكتملة
+                  </span>
+                </div>
+              </Card>
+            ))
+          )}
+        </TabsContent>
+
+        {/* الملغاة */}
+        <TabsContent value="cancelled" className="mt-6 space-y-4">
+          {cancelledLessons.length === 0 ? (
+            <Card className="p-8 text-center shadow-md">
+              <XCircle className="mx-auto h-12 w-12 text-gray-400" />
+              <p className="mt-2 text-gray-500">لا توجد جلسات ملغاة</p>
+            </Card>
+          ) : (
+            cancelledLessons.map((lesson) => (
+              <Card key={lesson.id} className="p-4 flex justify-between items-center shadow-md">
+                <div className="text-right">
+                  <h3 className="font-bold text-lg flex items-center gap-2 justify-end">
+                    {lesson.teacher} <User className="h-5 w-5 text-gray-600" />
+                  </h3>
+                  <p className="text-sm text-gray-500">{lesson.subject}</p>
+                  <p className="text-sm mt-1 flex items-center gap-1 justify-end">
+                    <Calendar className="h-4 w-4 text-red-500" /> {lesson.date}
+                  </p>
+                  <p className="text-sm text-gray-500 flex items-center gap-1 justify-end">
+                    ⏰ {lesson.time}
+                  </p>
+                </div>
+                <div className="flex flex-col items-start gap-2">
+                  <span className="px-3 py-1 rounded-full text-sm bg-red-100 text-red-600">
+                    ملغاة
+                  </span>
+                </div>
+              </Card>
+            ))
+          )}
+        </TabsContent>
+      </Tabs>
+    </div>
+  );
 }
