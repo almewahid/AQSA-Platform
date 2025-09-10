@@ -1,7 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { Calendar, CheckCircle, BookOpen, XCircle, User } from "lucide-react";
+import {
+  Calendar,
+  CheckCircle,
+  BookOpen,
+  XCircle,
+  User,
+  GraduationCap,
+} from "lucide-react";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -57,41 +64,44 @@ export default function MyLessons() {
 
   return (
     <div className="p-6 space-y-6">
-      {/* العنوان والوصف */}
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold">جلساتي التعليمية</h1>
-        <p className="text-gray-500 text-lg">تتبع جلساتك وإدارة رحلتك التعليمية</p>
+      {/* الهيدر */}
+      <div className="flex items-center justify-center gap-2 text-blue-700">
+        <BookOpen className="h-7 w-7" />
+        <h1 className="text-3xl font-bold">دروسي</h1>
       </div>
+      <p className="text-center text-gray-500 text-lg">
+        تتبع جلساتك وإدارة رحلتك التعليمية
+      </p>
 
-      {/* الكروت الخاصة بالإحصائيات */}
+      {/* كروت الإحصائيات */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="p-4 flex items-center gap-3 shadow-md">
+        <Card className="p-4 flex items-center justify-between shadow-md">
           <BookOpen className="h-10 w-10 text-blue-500" />
-          <div>
+          <div className="text-right">
             <p className="text-base text-gray-500">إجمالي الجلسات</p>
             <p className="text-2xl font-bold">{stats.total}</p>
           </div>
         </Card>
 
-        <Card className="p-4 flex items-center gap-3 shadow-md">
+        <Card className="p-4 flex items-center justify-between shadow-md">
           <CheckCircle className="h-10 w-10 text-green-500" />
-          <div>
+          <div className="text-right">
             <p className="text-base text-gray-500">الجلسات المكتملة</p>
             <p className="text-2xl font-bold">{stats.completed}</p>
           </div>
         </Card>
 
-        <Card className="p-4 flex items-center gap-3 shadow-md">
+        <Card className="p-4 flex items-center justify-between shadow-md">
           <Calendar className="h-10 w-10 text-orange-500" />
-          <div>
+          <div className="text-right">
             <p className="text-base text-gray-500">الجلسات القادمة</p>
             <p className="text-2xl font-bold">{stats.upcoming}</p>
           </div>
         </Card>
 
-        <Card className="p-4 flex items-center gap-3 shadow-md">
-          <Calendar className="h-10 w-10 text-purple-500" />
-          <div>
+        <Card className="p-4 flex items-center justify-between shadow-md">
+          <GraduationCap className="h-10 w-10 text-purple-500" />
+          <div className="text-right">
             <p className="text-base text-gray-500">الجلسات المتبقية</p>
             <p className="text-2xl font-bold">{stats.remaining}</p>
           </div>
@@ -126,8 +136,11 @@ export default function MyLessons() {
             </Card>
           ) : (
             upcomingLessons.map((lesson) => (
-              <Card key={lesson.id} className="p-4 flex justify-between items-center shadow-md">
-                {/* بيانات المدرس */}
+              <Card
+                key={lesson.id}
+                className="p-4 flex justify-between items-center shadow-md"
+              >
+                {/* بيانات الدرس */}
                 <div className="text-right">
                   <h3 className="font-bold text-lg flex items-center gap-2 justify-end">
                     {lesson.teacher} <User className="h-5 w-5 text-gray-600" />
@@ -172,7 +185,10 @@ export default function MyLessons() {
             </Card>
           ) : (
             completedLessons.map((lesson) => (
-              <Card key={lesson.id} className="p-4 flex justify-between items-center shadow-md">
+              <Card
+                key={lesson.id}
+                className="p-4 flex justify-between items-center shadow-md"
+              >
                 <div className="text-right">
                   <h3 className="font-bold text-lg flex items-center gap-2 justify-end">
                     {lesson.teacher} <User className="h-5 w-5 text-gray-600" />
@@ -204,7 +220,10 @@ export default function MyLessons() {
             </Card>
           ) : (
             cancelledLessons.map((lesson) => (
-              <Card key={lesson.id} className="p-4 flex justify-between items-center shadow-md">
+              <Card
+                key={lesson.id}
+                className="p-4 flex justify-between items-center shadow-md"
+              >
                 <div className="text-right">
                   <h3 className="font-bold text-lg flex items-center gap-2 justify-end">
                     {lesson.teacher} <User className="h-5 w-5 text-gray-600" />
